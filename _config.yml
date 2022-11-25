@@ -1,29 +1,24 @@
 # Site settings
-title: Website Title
-description: Website short description
+title: Leon Martin
+description: PhD Student in Computational Neuroscience and Health Data Science
 baseurl: "" 
 #change the baseurl to "" if you are using it as your user GitHub Pages
-url: "https://yk-liu.github.io"  
+url: "https://leon-k-martin.github.io"  
 
 
 # GitHub User settings
-username: Username
-github_username: github_username
-user_description: user_description
-user_title: user_title
-email: 
+username: Leon Martin
+github_username: leon-k-martin
+user_description: Knowledge-based systems, computational semantics, brain dynamics & network neuroscience
+user_title: PhD Student
+email: leon.martin@bih-charite.de
 
 # Blog Author settings
 author:
-  name:            
-  picture:        
-  email:           
-  description:     
-  twitter:
-  facebook:
-  github:          
-  linkedin:
-  clustrmap:      
+  googlescholar    : "https://scholar.google.com/citations?user=bgnVj8wAAAAJ&hl=en"
+  name             : "Leon Martin"  
+  email            : "leon.martin@bih-charite.de"
+  github           : "http://github.com/leon-k-martin"
 
 
 # markdown
