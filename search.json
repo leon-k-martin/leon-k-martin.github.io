@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "connectome.html",
+    "href": "connectome.html",
+    "title": "Leon Martin",
+    "section": "",
+    "text": "&lt;button id=\"reset-view\"&gt;Reset View&lt;/button&gt;\n&lt;button id=\"toggle-force\"&gt;Force&lt;/button&gt;\n&lt;button id=\"top-view\"&gt;Top View&lt;/button&gt;\n&lt;button id=\"side-view\"&gt;Side View&lt;/button&gt;\n&lt;button id=\"front-view\"&gt;Front View&lt;/button&gt;\n\n\n&lt;label for=\"nodeRelSize\"&gt;Node Size:&lt;/label&gt;\n&lt;input\n    type=\"range\"\n    id=\"nodeRelSize\"\n    name=\"nodeRelSize\"\n    min=\"1\"\n    max=\"20\"\n    value=\"2\"\n/&gt;\n&lt;span id=\"nodeSizeValue\"&gt;2&lt;/span&gt;"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hello!",
+    "section": "",
+    "text": "Leon Martin\nPhD Student in Compuational Neuroscience and Health Data Science"
+  }
+]
