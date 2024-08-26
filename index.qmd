@@ -1,6 +1,8 @@
 ---
 title: "Hello!"
 ---
+{{< include connectome.qmd >}}
+
 Leon Martin
 
 PhD Student in Compuational Neuroscience and Health Data Science
