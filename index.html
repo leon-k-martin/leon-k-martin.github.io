@@ -66,6 +66,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="//unpkg.com/react/umd/react.production.min.js"></script>
+<script src="//unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+<script src="//unpkg.com/@babel/standalone"></script>
+
+<script src="//unpkg.com/react-force-graph-2d"></script>
+<script src="//unpkg.com/3d-force-graph"></script>
 <script type="text/javascript" src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
 <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css">
 
@@ -138,6 +144,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div id="graph" style="width: 100%; height: 400px;"></div>
+
+<script type="text/jsx">
+  function genRandomTree(N = 100, reverse = false) {
+  return {
+    nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+    .filter(id => id)
+    .map(id => ({
+      [reverse ? 'target' : 'source']: id,
+      [reverse ? 'source' : 'target']: Math.round(Math.random() * (id-1))
+    }))
+  };
+}
+  const { useRef } = React;
+
+  const data = genRandomTree();
+  const graphContainer = document.getElementById('graph');
+  const graph = document.getElementById('3d-graph');
+  const infobox = document.getElementById('infobox');
+
+  const Graph = () => {
+    const fgRef = useRef();
+
+    return <ForceGraph2D
+      ref={fgRef}
+      graphData={data}
+      cooldownTicks={100}
+      onEngineStop={() => fgRef.current.zoomToFit(400)}
+      width={graphContainer.clientWidth}
+      height={graphContainer.clientHeight}
+    />;
+  };
+
+  ReactDOM.render(
+    <Graph />,
+    document.getElementById('graph')
+  );
+</script>
 <p>Leon Martin</p>
 <p>PhD Student in Compuational Neuroscience and Health Data Science</p>
 <a rel="me" href="https://fediscience.org/@leonmartin">Mastodon</a>

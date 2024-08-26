@@ -66,6 +66,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="//unpkg.com/react/umd/react.production.min.js"></script>
+<script src="//unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+<script src="//unpkg.com/@babel/standalone"></script>
+
+<script src="//unpkg.com/react-force-graph-2d"></script>
+<script src="//unpkg.com/3d-force-graph"></script>
 <script type="text/javascript" src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
 <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css">
 
@@ -122,119 +128,45 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div id="graph-container" style="width: 100%; height: 400px; position: relative;">
-<div id="3d-graph" style="width: 100%; height: 100%;">
+<div id="graph" style="width: 100%; height: 400px;"></div>
 
-</div>
-<div id="infobox" style="position: absolute; bottom: 10px; right: 10px; background-color: white; padding: 10px; border: 1px solid black; display: none; width: 200px; word-wrap: break-word;">
+<script type="text/jsx">
+  function genRandomTree(N = 100, reverse = false) {
+  return {
+    nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+    .filter(id => id)
+    .map(id => ({
+      [reverse ? 'target' : 'source']: id,
+      [reverse ? 'source' : 'target']: Math.round(Math.random() * (id-1))
+    }))
+  };
+}
+  const { useRef } = React;
 
-</div>
-</div>
-<script src="https://unpkg.com/3d-force-graph"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const GROUP_COLORS = [
-      '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-      '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
-      '#393b79', '#5254a3'
-    ];
+  const data = genRandomTree();
+  const graphContainer = document.getElementById('graph');
+  const graph = document.getElementById('3d-graph');
+  const infobox = document.getElementById('infobox');
 
-    fetch('graphData2.json')
-      .then(response => response.json())
-      .then(gData => {
-        gData.nodes.forEach(node => {
-          if (!node.group) {
-            node.group = Math.ceil(Math.random() * GROUP_COLORS.length);
-          }
-        });
+  const Graph = () => {
+    const fgRef = useRef();
 
-        const graphContainer = document.getElementById('graph-container');
-        const graph = document.getElementById('3d-graph');
-        const infobox = document.getElementById('infobox');
+    return <ForceGraph2D
+      ref={fgRef}
+      graphData={data}
+      cooldownTicks={100}
+      onEngineStop={() => fgRef.current.zoomToFit(400)}
+      width={graphContainer.clientWidth}
+      height={graphContainer.clientHeight}
+    />;
+  };
 
-        const Graph = ForceGraph3D()(graph)
-          .graphData(gData)
-          .showNavInfo(false)
-          .nodeLabel(d => `<span style="color: black">${d.id}</span>`)
-          .backgroundColor(`rgba(255,255, 255, 0.8)`)
-          .width(graphContainer.clientWidth)
-          .height(graphContainer.clientHeight)
-          .linkWidth(0.1)
-          .linkDirectionalParticles("value")
-          .linkDirectionalParticleWidth(d => d.value / 50)
-          .linkDirectionalParticleSpeed(d => Math.pow(d.value, 0.003))
-          .nodeAutoColorBy("group")
-          .nodeOpacity(0.9)
-          .nodeRelSize(2) // Default node size
-          .cameraPosition({ z: 300 }) // Default camera position
-          .onNodeHover(node => {
-            if (node) {
-              infobox.innerHTML = `<strong>${node.id}</strong>: ${node.definition || 'No definition available'}`;
-              infobox.style.display = 'block';
-            } else {
-              infobox.style.display = 'none';
-            }
-          });
-
-        // Optional: Add window resize listener to adjust graph size dynamically
-        window.addEventListener('resize', () => {
-          Graph.width(graphContainer.clientWidth).height(graphContainer.clientHeight);
-        });
-
-        // Initial resize to fit the container
-        Graph.width(graphContainer.clientWidth).height(graphContainer.clientHeight);
-
-        // Control Buttons
-        document.querySelector('#reset-view').addEventListener('click', () => {
-          Graph.zoomToFit(1000);
-        });
-
-        document.querySelector('#toggle-force').addEventListener('click', () => {
-          Graph.d3Force('charge').strength(-120);
-          Graph.cooldownTicks(0);
-          Graph.d3ReheatSimulation();
-        });
-
-        // Camera Position Controls
-        document.querySelector('#top-view').addEventListener('click', () => {
-          Graph.cameraPosition({ x: 0, y: 0, z: 300 }, { x: 0, y: 0, z: 0 }, 1000);
-        });
-
-        document.querySelector('#side-view').addEventListener('click', () => {
-          Graph.cameraPosition({ x: 300, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, 1000);
-        });
-
-        document.querySelector('#front-view').addEventListener('click', () => {
-          Graph.cameraPosition({ x: 0, y: 300, z: 0 }, { x: 0, y: 0, z: 0 }, 1000);
-        });
-
-        // Node Size Control
-        document.querySelector('#nodeRelSize').addEventListener('input', (event) => {
-          Graph.nodeRelSize(Number(event.target.value));
-        });
-      })
-      .catch(error => console.error('Error fetching graph data:', error));
-  });
+  ReactDOM.render(
+    <Graph />,
+    document.getElementById('graph')
+  );
 </script>
-<div class="buttons">
-<pre><code>&lt;button id="reset-view"&gt;Reset View&lt;/button&gt;
-&lt;button id="toggle-force"&gt;Force&lt;/button&gt;
-&lt;button id="top-view"&gt;Top View&lt;/button&gt;
-&lt;button id="side-view"&gt;Side View&lt;/button&gt;
-&lt;button id="front-view"&gt;Front View&lt;/button&gt;</code></pre>
-</div>
-<div class="sliders">
-<pre><code>&lt;label for="nodeRelSize"&gt;Node Size:&lt;/label&gt;
-&lt;input
-    type="range"
-    id="nodeRelSize"
-    name="nodeRelSize"
-    min="1"
-    max="20"
-    value="2"
-/&gt;
-&lt;span id="nodeSizeValue"&gt;2&lt;/span&gt;</code></pre>
-</div>
 
 
 
