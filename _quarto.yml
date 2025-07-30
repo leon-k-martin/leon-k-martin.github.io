@@ -8,8 +8,6 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: CV_Leon_Martin.qmd
-        text: CV
       - about.qmd
   page-footer:
     right:
