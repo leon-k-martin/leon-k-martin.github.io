@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://leon-k-martin.github.io/cv.html</loc>
-    <lastmod>2024-08-26T13:49:38.151Z</lastmod>
-  </url>
-  <url>
-    <loc>https://leon-k-martin.github.io/CV_Leon_Martin.html</loc>
-    <lastmod>2024-08-26T16:01:09.218Z</lastmod>
-  </url>
-  <url>
-    <loc>https://leon-k-martin.github.io/connectome.html</loc>
-    <lastmod>2024-08-26T16:04:24.979Z</lastmod>
+    <loc>https://leon-k-martin.github.io/about.html</loc>
+    <lastmod>2024-08-26T13:13:10.096Z</lastmod>
   </url>
   <url>
     <loc>https://leon-k-martin.github.io/index.html</loc>
     <lastmod>2024-08-26T15:56:50.463Z</lastmod>
   </url>
   <url>
-    <loc>https://leon-k-martin.github.io/about.html</loc>
-    <lastmod>2024-08-26T13:13:10.096Z</lastmod>
+    <loc>https://leon-k-martin.github.io/connectome.html</loc>
+    <lastmod>2024-08-26T16:06:14.019Z</lastmod>
+  </url>
+  <url>
+    <loc>https://leon-k-martin.github.io/CV_Leon_Martin.html</loc>
+    <lastmod>2025-07-30T15:58:44.424Z</lastmod>
   </url>
 </urlset>
